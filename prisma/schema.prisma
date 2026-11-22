@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Applicant {
+  id               Int      @id @default(autoincrement())
+  nama             String
+  simpanan         Int
+  pinjamanDiajukan Int
+  urgensi          Int
+  tanggungan       Int
+  umur             Int
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("applicants")
+}
+
+model Calculation {
+  id        Int                 @id @default(autoincrement())
+  createdAt DateTime            @default(now())
+  results   CalculationResult[]
+
+  @@map("calculations")
+}
+
+model CalculationResult {
+  id               Int         @id @default(autoincrement())
+  calculationId    Int
+  calculation      Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  rank             Int
+  qi               Decimal     @db.Decimal(10, 6)
+  wsm              Decimal     @db.Decimal(10, 6)
+  wpm              Decimal     @db.Decimal(10, 6)
+  nama             String
+  simpanan         Int
+  pinjamanDiajukan Int
+  urgensi          Int
+  tanggungan       Int
+  umur             Int
+  c1               Int
+  c2               Int
+  c3               Int
+  c4               Int
+  c5               Int
+  createdAt        DateTime    @default(now())
+
+  @@map("calculation_results")
+}
