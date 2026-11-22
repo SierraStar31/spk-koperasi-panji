@@ -41,7 +41,7 @@ async function PrintReportContent({ params }: PrintPageProps) {
     <div className="min-h-screen bg-white text-gray-900 print:bg-white print:text-black">
       {/* Top Navbar (hidden during print) */}
       <div className="bg-gray-100 border-b border-gray-200 px-6 py-3 flex justify-between items-center no-print">
-        <Link href="/calculation/history" className="text-sm font-medium text-indigo-600 hover:text-indigo-800">
+        <Link href="/calculation/history" className="text-sm font-medium text-[#1b4d3e] hover:text-[#143a2e] rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1b4d3e]">
           ← Kembali ke Riwayat
         </Link>
         <PrintButton />
@@ -50,6 +50,13 @@ async function PrintReportContent({ params }: PrintPageProps) {
       <main className="max-w-4xl mx-auto p-8 space-y-8 print:p-0 print:max-w-none">
         {/* Report Header */}
         <div className="text-center border-b-2 border-gray-800 pb-6 space-y-2">
+          <img
+            src="/logo%20koperasi.svg"
+            alt="Logo Koperasi Panji Borneo Mandiri"
+            width={72}
+            height={72}
+            className="w-18 h-18 mx-auto mb-2"
+          />
           <h1 className="text-2xl font-bold uppercase tracking-wide text-gray-900">
             KOPERASI PANJI BORNEO MANDIRI
           </h1>
@@ -183,7 +190,7 @@ async function PrintReportContent({ params }: PrintPageProps) {
                       <td className="px-3 py-2 text-right font-mono font-bold text-gray-900">{Number(res.qi).toFixed(4)}</td>
                       <td className="px-3 py-2 text-center">
                         {isRecommended ? (
-                          <span className="font-semibold text-indigo-700">Rekomendasi</span>
+                          <span className="font-semibold text-gray-900">Rekomendasi</span>
                         ) : (
                           <span className="text-gray-500">-</span>
                         )}

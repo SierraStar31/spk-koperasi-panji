@@ -1,26 +1,29 @@
 import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/app/components/ui/Button";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 items-center justify-center p-6 text-center text-gray-900">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8 border border-gray-200 space-y-4">
-        <div className="text-4xl font-extrabold text-indigo-600">404</div>
-        <h1 className="text-xl font-bold text-gray-900">Halaman Tidak Ditemukan</h1>
-        <p className="text-sm text-gray-600">
+    <div className="flex flex-col min-h-screen bg-[#fcfbf9] items-center justify-center px-4 py-12 text-center text-[#1f1e1c]">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-sm border border-[#e6e2dc] p-8 space-y-4">
+        <Image
+          src="/logo%20koperasi.svg"
+          alt="Logo Koperasi Panji Borneo Mandiri"
+          width={64}
+          height={64}
+          className="w-16 h-16 mx-auto rounded-2xl shadow-sm"
+        />
+        <div className="text-4xl font-bold tracking-tight text-[#1b4d3e]">404</div>
+        <h1 className="text-xl font-bold">Halaman Tidak Ditemukan</h1>
+        <p className="text-sm text-[#5e5b56] leading-relaxed">
           Maaf, halaman atau laporan perhitungan yang Anda cari tidak ditemukan atau telah dihapus.
         </p>
         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-3">
-          <Link
-            href="/"
-            className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 shadow-sm"
-          >
-            Kembali ke Beranda
+          <Link href="/">
+            <Button variant="primary" className="w-full sm:w-auto">Kembali ke Beranda</Button>
           </Link>
-          <Link
-            href="/calculation/history"
-            className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200"
-          >
-            Riwayat Perhitungan
+          <Link href="/calculation/history">
+            <Button variant="secondary" className="w-full sm:w-auto">Riwayat Perhitungan</Button>
           </Link>
         </div>
       </div>
