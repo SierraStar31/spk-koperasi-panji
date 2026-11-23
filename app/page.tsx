@@ -59,7 +59,7 @@ async function HomeContent() {
   return (
     <AppLayout sessionUsername={session.value}>
       <div className="space-y-8">
-        <div className="bg-gradient-to-r from-[#1b4d3e] to-[#143a2e] rounded-2xl text-white p-8 shadow-sm">
+        <div className="bg-linear-to-r from-[#1b4d3e] to-[#143a2e] rounded-2xl text-white p-8 shadow-sm">
           <div className="max-w-2xl space-y-3">
             <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-semibold tracking-wide uppercase border border-white/20">
               Dashboard Ketua Koperasi

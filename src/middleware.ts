@@ -10,7 +10,10 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/login") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon.ico") ||
-    pathname.startsWith("/public")
+    pathname.startsWith("/public") ||
+    // Aset publik (mis. logo/wallpaper .svg) harus bisa dimuat di halaman login
+    // yang memang belum punya session.
+    /\.[a-zA-Z0-9]+$/.test(pathname)
   ) {
     if (session && pathname.startsWith("/login")) {
       return NextResponse.redirect(new URL("/", request.url));

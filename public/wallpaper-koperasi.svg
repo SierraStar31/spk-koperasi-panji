@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-labelledby="title desc">
+<title id="title">Wallpaper login Koperasi Panji Borneo Mandiri</title>
+<desc id="desc">Ilustrasi vertikal 4 banding 5 untuk panel login, dengan logo beruang dan nama Koperasi Panji Borneo Mandiri dalam bingkai ornamen geometris Dayak.</desc>
+<defs>
+  <radialGradient id="bg" cx="50%" cy="40%" r="75%"><stop stop-color="#1d3930"/><stop offset=".62" stop-color="#10241f"/><stop offset="1" stop-color="#091512"/></radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3dc81"/><stop offset=".5" stop-color="#d8b65a"/><stop offset="1" stop-color="#a77d31"/></linearGradient>
+  <pattern id="batik" width="88" height="88" patternUnits="userSpaceOnUse"><path d="M44 4 57 20 44 36 31 20ZM44 52 57 68 44 84 31 68ZM4 44l16-13 16 13-16 13Zm48 0 16-13 16 13-16 13Z" fill="none" stroke="#d8b65a" stroke-width="2" opacity=".22"/><circle cx="44" cy="44" r="3" fill="#d8b65a" opacity=".2"/></pattern>
+  <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="24"/></filter>
+</defs>
+<rect width="1200" height="1500" fill="url(#bg)"/>
+<path d="M0 0h330L0 330ZM1200 0H870l330 330ZM0 1500v-330l330 330ZM1200 1500v-330l-330 330Z" fill="url(#batik)" opacity=".7"/>
+<rect x="22" y="22" width="1156" height="1456" rx="48" fill="none" stroke="#d8b65a" stroke-opacity=".4" stroke-width="2"/>
+<g transform="translate(0 120)">
+<ellipse cx="600" cy="480" rx="315" ry="290" fill="#d8b65a" opacity=".11" filter="url(#softGlow)"/>
+<!-- Dayak-inspired ornament at the top -->
+<g fill="none" stroke="#d8b65a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".75">
+  <path d="M430 128q-28-32-56 0 28 32 56 0Zm340 0q28-32 56 0-28 32-56 0Z"/>
+  <path d="M465 128h270M600 88l18 22-18 22-18-22Z"/>
+</g>
+<!-- Centered logo -->
+<svg x="390" y="270" width="420" height="420" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
+  <title id="logo-title">Ikon Beruang Dayak</title>
+  <desc id="logo-desc">Ikon persegi beruang madu dengan ornamen simetris terinspirasi motif Dayak.</desc>
+  <defs>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#182a27"/>
+      <stop offset="1" stop-color="#0c1718"/>
+    </linearGradient>
+    <linearGradient id="fur" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#343b39"/>
+      <stop offset="1" stop-color="#111918"/>
+    </linearGradient>
+  </defs>
+  <!-- Square badge -->
+  <rect x="10" y="10" width="492" height="492" rx="112" fill="url(#field)"/>
+  <rect x="22" y="22" width="468" height="468" rx="102" fill="none" stroke="#d8b65a" stroke-width="4"/>
+
+  <!-- Dayak-inspired edge ornament: mirrored curls and diamond leaves -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="8">
+    <g stroke="#e4c64f">
+      <path d="M71 198V135q0-27 26-27h35q20 0 20 19 0 17-17 17-12 0-12-11 0-8 8-8"/>
+      <path d="M441 198V135q0-27-26-27h-35q-20 0-20 19 0 17 17 17 12 0 12-11 0-8-8-8"/>
+      <path d="M71 314v63q0 27 26 27h35q20 0 20-19 0-17-17-17-12 0-12 11 0 8 8 8"/>
+      <path d="M441 314v63q0 27-26 27h-35q-20 0-20-19 0-17 17-17 12 0 12 11 0 8-8 8"/>
+      <path d="M52 222l20 34-20 34M460 222l-20 34 20 34"/>
+    </g>
+    <g stroke="#d45b4c" stroke-width="6">
+      <path d="M115 67q20-23 40 0-20 23-40 0Zm242 0q20-23 40 0-20 23-40 0Z"/>
+      <path d="M115 445q20-23 40 0-20 23-40 0Zm242 0q20-23 40 0-20 23-40 0Z"/>
+    </g>
+    <g stroke="#62ad83" stroke-width="6">
+      <path d="M88 256q22-28 44 0-22 28-44 0Zm292 0q22-28 44 0-22 28-44 0Z"/>
+    </g>
+  </g>
+  <g fill="#d8b65a">
+    <path d="m91 245 11 11-11 11-11-11zM421 245l11 11-11 11-11-11z"/>
+    <path d="m256 42 12 14-12 14-12-14zM256 442l12 14-12 14-12-14z"/>
+  </g>
+
+  <!-- Black-furred teddy bear face -->
+  <g stroke="#f4f1e8" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+    <!-- round ears behind the head -->
+    <circle cx="174" cy="190" r="39" fill="#181b1b"/>
+    <circle cx="338" cy="190" r="39" fill="#181b1b"/>
+    <circle cx="174" cy="190" r="20" fill="#303535" stroke="#090c0c" stroke-width="5"/>
+    <circle cx="338" cy="190" r="20" fill="#303535" stroke="#090c0c" stroke-width="5"/>
+    <!-- soft, rounded teddy head -->
+    <path fill="#181b1b" d="M256 150c-67 0-117 48-117 116 0 66 47 111 117 111s117-45 117-111c0-68-50-116-117-116Z"/>
+    <path fill="#292e2d" stroke="none" d="M174 222c9-35 39-59 74-64-35 27-45 82-35 126 6 29 22 54 42 69-57-2-97-39-97-87 0-15 6-31 16-44Z" opacity=".65"/>
+    <!-- eyes -->
+    <ellipse cx="216" cy="244" rx="9" ry="12" fill="#241912" stroke="none"/>
+    <ellipse cx="296" cy="244" rx="9" ry="12" fill="#241912" stroke="none"/>
+    <circle cx="219" cy="240" r="3" fill="#fff1d5" stroke="none"/>
+    <circle cx="299" cy="240" r="3" fill="#fff1d5" stroke="none"/>
+    <!-- rounded cream muzzle -->
+    <path fill="#f1d8a3" stroke="#38251b" stroke-width="6" d="M207 278c6-19 24-31 49-31s43 12 49 31c8 24-10 53-49 53s-57-29-49-53Z"/>
+    <path fill="#3b281d" stroke="none" d="M241 273c4-6 10-9 15-9s11 3 15 9c4 6 1 13-6 15l-9 3-9-3c-7-2-10-9-6-15Z"/>
+    <path fill="none" stroke="#38251b" stroke-width="5" d="M256 291v9m0 0c-7 10-17 13-27 8m27-8c7 10 17 13 27 8"/>
+  </g>
+
+  <!-- Three-feather crown inspired by the reference, with a gold-edged band -->
+  <g stroke-linejoin="round">
+    <path d="M193 164c-18-25-34-58-35-92 34 16 60 44 75 82l-14 20Z" fill="#f4f1e8" stroke="#171b1b" stroke-width="7"/>
+    <path d="M236 157c-4-34 1-68 20-99 19 31 24 65 20 99l-20 15Z" fill="#f4f1e8" stroke="#171b1b" stroke-width="7"/>
+    <path d="M293 154c15-38 41-66 75-82-1 34-17 67-35 92l-26 10Z" fill="#f4f1e8" stroke="#171b1b" stroke-width="7"/>
+    <path d="M166 116c13-8 26-12 39-15 6 10 12 21 17 33-12 6-25 10-39 12-7-10-13-20-17-30Z" fill="#171b1b" stroke="none"/>
+    <path d="M237 111c1-13 4-26 9-39 6-1 14-1 20 0 5 13 8 26 9 39-12 4-26 4-38 0Z" fill="#171b1b" stroke="none"/>
+    <path d="M307 134c5-12 11-23 17-33 13 3 26 7 39 15-4 10-10 20-17 30-14-2-27-6-39-12Z" fill="#171b1b" stroke="none"/>
+    <path d="M151 158Q256 193 361 158L345 204Q256 230 167 204Z" fill="#272321" stroke="#d8b65a" stroke-width="8"/>
+    <path d="M160 166Q256 197 352 166" fill="none" stroke="#f0d46b" stroke-width="4"/>
+    <path d="M256 177l18 18-18 18-18-18Z" fill="#d85b4c" stroke="#f1d56a" stroke-width="4"/>
+    <path d="M256 185l10 10-10 10-10-10Z" fill="#62ad83" stroke="none"/>
+  </g>
+
+  <!-- Honey-gold chest patch -->
+  <path d="M207 365c13 5 31 7 49 7s36-2 49-7c-12 23-29 35-49 35s-37-12-49-35Z" fill="#d8a653" stroke="#151b19" stroke-width="7" stroke-linejoin="round"/>
+</svg>
+<!-- Dayak-inspired framing for the cooperative name -->
+<g fill="none" stroke="#d8b65a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M305 840h225m140 0h225" opacity=".72"/>
+  <path d="M600 820l22 20-22 20-22-20Z" fill="#d85b4c"/>
+  <path d="M600 830l11 10-11 10-11-10Z" fill="#62ad83" stroke="none"/>
+  <path d="M365 1138h180m110 0h180" opacity=".72"/>
+  <path d="M600 1118l20 20-20 20-20-20Z" fill="#d8b65a"/>
+  <path d="M400 840q-26-24-52 0 26 24 52 0Zm400 0q26-24 52 0-26 24-52 0Z" stroke="#62ad83" stroke-width="5"/>
+  <path d="M428 1138l-18-18-18 18 18 18Zm344 0 18-18 18 18-18 18Z" fill="#d45b4c" stroke="none"/>
+</g>
+<text x="600" y="930" text-anchor="middle" fill="#d8b65a" font-family="Georgia, 'Times New Roman', serif" font-size="31" font-weight="700" letter-spacing="8">Koperasi</text>
+<text x="600" y="1010" text-anchor="middle" fill="#f3e7c0" font-family="Georgia, 'Times New Roman', serif" font-size="56" font-weight="700" letter-spacing="1">Panji Borneo</text>
+<text x="600" y="1080" text-anchor="middle" fill="#f3e7c0" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="700" letter-spacing="7">Mandiri</text>
+<path d="M420 1175h360" stroke="#d8b65a" stroke-opacity=".45" stroke-width="2"/>
+</g>
+</svg>
