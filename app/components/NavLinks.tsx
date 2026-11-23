@@ -20,19 +20,19 @@ export function NavLinks() {
   ];
 
   return (
-    <nav className="space-y-1.5">
-      {navItems.map((item, idx) => (
+    <nav className="space-y-0.5">
+      {navItems.map((item) => (
         <Link
-          key={idx}
+          key={item.href}
           href={item.href}
           aria-current={item.active ? "page" : undefined}
-          className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1b4d3e] focus-visible:ring-offset-2 ${
+          className={`block px-3 py-2 rounded-md text-sm transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1b4d3e] ${
             item.active
-              ? "bg-[#1b4d3e] text-white shadow-sm"
-              : "text-[#5e5b56] hover:bg-[#f7f5f0] hover:text-[#1f1e1c]"
+              ? "bg-[#fcfbf9] font-semibold text-[#1b4d3e]"
+              : "font-medium text-white/75 hover:bg-white/10 hover:text-white"
           }`}
         >
-          <span>{item.label}</span>
+          {item.label}
         </Link>
       ))}
     </nav>

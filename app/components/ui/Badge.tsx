@@ -10,7 +10,7 @@ export function Badge({ variant = "neutral", children, className = "" }: BadgePr
   let styles = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold";
   
   if (variant === "benefit" || variant === "success") {
-    styles += " bg-emerald-100 text-emerald-800 border border-emerald-200";
+    styles += " bg-[#1b4d3e]/10 text-[#1b4d3e] border border-[#1b4d3e]/20";
   } else if (variant === "cost" || variant === "warning") {
     styles += " bg-amber-100 text-amber-800 border border-amber-200";
   } else if (variant === "rekomendasi") {

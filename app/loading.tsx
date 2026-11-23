@@ -3,10 +3,10 @@ import { AppSkeleton } from "@/app/components/AppSkeleton";
 export default function Loading() {
   return (
     <AppSkeleton>
-      <div className="h-44 bg-teal-800/10 rounded-2xl p-8 space-y-4">
-        <div className="h-6 bg-teal-900/15 rounded w-32"></div>
-        <div className="h-8 bg-teal-900/15 rounded w-3/4"></div>
-        <div className="h-4 bg-teal-900/15 rounded w-1/2"></div>
+      <div className="h-44 bg-[#1b4d3e]/10 rounded-2xl p-8 space-y-4">
+        <div className="h-6 bg-[#1b4d3e]/15 rounded w-32"></div>
+        <div className="h-8 bg-[#1b4d3e]/15 rounded w-3/4"></div>
+        <div className="h-4 bg-[#1b4d3e]/15 rounded w-1/2"></div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

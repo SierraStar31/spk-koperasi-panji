@@ -10,30 +10,43 @@ interface AppLayoutProps {
 export function AppLayout({ children, sessionUsername }: AppLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#fcfbf9] text-[#1f1e1c]">
-      <aside className="w-full md:w-64 bg-white border-b md:border-b-0 md:border-r border-[#e6e2dc] flex flex-col justify-between shrink-0 shadow-sm no-print">
-        <div className="p-6 space-y-6">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <Image
-                src="/logo%20koperasi.svg"
-                alt="Logo Koperasi Panji Borneo Mandiri"
-                width={40}
-                height={40}
-                className="w-10 h-10 rounded-lg shadow-sm shrink-0"
-              />
-              <h1 className="text-base font-bold text-[#1f1e1c] tracking-tight">Koperasi Panji Borneo Mandiri</h1>
-            </div>
-            <p className="text-xs text-[#5e5b56]">Sistem Pendukung Keputusan Penentuan Prioritas Penerima Pinjaman</p>
+      <aside className="w-full md:w-64 md:h-screen md:sticky md:top-0 md:self-start bg-[#1b4d3e] text-white flex flex-col shrink-0 no-print">
+        {/* Brand */}
+        <div className="px-4 py-4 border-b border-white/15 flex items-center gap-2.5">
+          <Image
+            src="/logo%20koperasi.svg"
+            alt="Logo Koperasi Panji Borneo Mandiri"
+            width={36}
+            height={36}
+            className="w-9 h-9 rounded-md shrink-0 bg-white/95 p-0.5"
+          />
+          <div className="min-w-0">
+            <h1 className="text-sm font-bold tracking-tight leading-snug break-words">
+              Koperasi Panji Borneo Mandiri
+            </h1>
+            <p className="text-[11px] text-white/60 leading-tight">
+              SPK Penerima Pinjaman
+            </p>
           </div>
+        </div>
 
+        {/* Navigation — satu-satunya bagian sidebar yang ikut scroll */}
+        <div className="flex-1 overflow-y-auto px-3 py-4">
+          <p className="px-2 mb-2 text-[10px] font-bold uppercase tracking-widest text-white/50">
+            Menu
+          </p>
           <NavLinks />
         </div>
 
-        <div className="p-6 border-t border-[#e6e2dc] space-y-4 bg-[#fcfbf9]/50">
+        {/* Account — selalu menempel di bawah, tidak ikut scroll */}
+        <div className="px-3 py-4 border-t border-white/15 shrink-0">
+          <p className="px-2 mb-2 text-[10px] font-bold uppercase tracking-widest text-white/50">
+            Akun
+          </p>
           {sessionUsername && (
-            <div className="text-xs text-[#5e5b56]">
-              Login sebagai:<br />
-              <strong className="text-[#1f1e1c] text-sm font-semibold">{sessionUsername}</strong>
+            <div className="px-2 mb-3">
+              <p className="text-[11px] text-white/60">Login sebagai</p>
+              <p className="text-sm font-semibold text-white truncate">{sessionUsername}</p>
             </div>
           )}
           <LogoutButton />

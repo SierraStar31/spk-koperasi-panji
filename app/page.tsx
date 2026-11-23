@@ -59,15 +59,15 @@ async function HomeContent() {
   return (
     <AppLayout sessionUsername={session.value}>
       <div className="space-y-8">
-        <div className="bg-gradient-to-r from-teal-900 to-teal-800 rounded-2xl text-white p-8 shadow-sm">
+        <div className="bg-gradient-to-r from-[#1b4d3e] to-[#143a2e] rounded-2xl text-white p-8 shadow-sm">
           <div className="max-w-2xl space-y-3">
-            <span className="inline-block px-3 py-1 rounded-full bg-teal-800/80 text-teal-200 text-xs font-semibold tracking-wide uppercase border border-teal-700">
+            <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-semibold tracking-wide uppercase border border-white/20">
               Dashboard Ketua Koperasi
             </span>
             <h1 className="text-3xl font-bold tracking-tight text-white">
               Sistem Pendukung Keputusan Penentuan Prioritas Penerima Pinjaman
             </h1>
-            <p className="text-teal-100 text-sm leading-relaxed">
+            <p className="text-white/80 text-sm leading-relaxed">
               Mengevaluasi dan menentukan kelayakan calon penerima pinjaman secara transparan, objektif, dan adil menggunakan metode WASPAS dan pembobotan ROC.
             </p>
           </div>

@@ -11,12 +11,12 @@ export function LogoutButton() {
   }
 
   return (
-    <form action={logoutAction}>
+    <form action={logoutAction} className="w-full">
       <button
         type="submit"
-        className="inline-flex items-center gap-2 px-3.5 py-2 border border-[#e6e2dc] rounded-lg text-xs font-medium text-[#ca3939] bg-white hover:bg-[#f7f5f0] shadow-2xs transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#1b4d3e] focus:ring-offset-1"
+        className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-red-300/25 rounded-md text-xs font-medium text-red-500 bg-red-500/10 hover:bg-red-900/20 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1b4d3e]"
       >
-        <IconLogout className="w-4 h-4 text-[#ca3939]" /> Keluar
+        <IconLogout className="w-4 h-4" /> Keluar
       </button>
     </form>
   );

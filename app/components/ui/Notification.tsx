@@ -12,8 +12,8 @@ export function Notification({ type = "info", message, className = "" }: Notific
   let icon = <IconInfo className="w-5 h-5 text-[#1b4d3e] shrink-0 mt-0.5" />;
 
   if (type === "success") {
-    styles += " bg-emerald-50 border-emerald-200 text-emerald-800";
-    icon = <IconCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />;
+    styles += " bg-[#1b4d3e]/5 border-[#1b4d3e]/20 text-[#1b4d3e]";
+    icon = <IconCheck className="w-5 h-5 text-[#1b4d3e] shrink-0 mt-0.5" />;
   } else if (type === "warning") {
     styles += " bg-amber-50 border-amber-200 text-amber-800";
     icon = <IconWarning className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />;

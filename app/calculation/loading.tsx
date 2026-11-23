@@ -8,7 +8,7 @@ export default function Loading() {
           <div className="h-8 bg-stone-200 rounded w-64"></div>
           <div className="h-4 bg-stone-100 rounded w-80"></div>
         </div>
-        <div className="h-10 bg-teal-800/20 rounded w-40"></div>
+        <div className="h-10 bg-[#1b4d3e]/20 rounded w-40"></div>
       </div>
 
       <div className="bg-white rounded-xl border border-stone-200 p-6 space-y-6">
