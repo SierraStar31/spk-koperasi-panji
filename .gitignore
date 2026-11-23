@@ -40,4 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# ai
+.agents
+.claude
+.mimocode
+
 /app/generated/prisma

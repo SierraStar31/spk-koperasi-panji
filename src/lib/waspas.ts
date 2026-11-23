@@ -43,7 +43,6 @@ export function calculateWaspas(
     }
   }
 
-  const critCodes = criteriaConfig.map((c) => c.code);
   const weights = criteriaConfig.map((c) => c.weight);
 
   // Find max for benefit and min for cost across columns

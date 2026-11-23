@@ -23,7 +23,7 @@ export function AppLayout({ children, sessionUsername }: AppLayoutProps) {
               />
               <h1 className="text-base font-bold text-[#1f1e1c] tracking-tight">Koperasi Panji Borneo Mandiri</h1>
             </div>
-            <p className="text-xs text-[#5e5b56]">Sistem Pendukung Keputusan WASPAS & ROC</p>
+            <p className="text-xs text-[#5e5b56]">Sistem Pendukung Keputusan Penentuan Prioritas Penerima Pinjaman</p>
           </div>
 
           <NavLinks />

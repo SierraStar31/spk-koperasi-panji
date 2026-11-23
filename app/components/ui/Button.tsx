@@ -1,7 +1,7 @@
 import React from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "danger";
+  variant?: "primary" | "secondary" | "danger" | "danger-soft";
   children: React.ReactNode;
 }
 
@@ -12,7 +12,7 @@ export function Button({
   disabled,
   ...props
 }: ButtonProps) {
-  let baseStyles = "inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer";
+  const baseStyles = "inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer";
   
   let variantStyles = "";
   if (variant === "primary") {
@@ -27,6 +27,10 @@ export function Button({
     variantStyles = disabled
       ? "bg-red-100 text-red-300 cursor-not-allowed shadow-none"
       : "bg-red-600 text-white hover:bg-red-700 focus:ring-red-600";
+  } else if (variant === "danger-soft") {
+    variantStyles = disabled
+      ? "bg-red-50 text-red-300 cursor-not-allowed shadow-none border border-red-100"
+      : "bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 hover:border-red-300 focus:ring-red-400";
   }
 
   return (

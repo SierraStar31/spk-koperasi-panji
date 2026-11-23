@@ -19,7 +19,7 @@ export function Input({ label, error, className = "", id, ...props }: InputProps
         id={inputId}
         className={`w-full px-3.5 py-2.5 bg-white border ${
           error ? "border-red-500 focus:ring-red-500" : "border-[#e6e2dc] focus:border-[#1b4d3e]"
-        } rounded-lg text-sm text-[#1f1e1c] shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1b4d3e]/20 transition-all duration-200`}
+        } rounded-lg text-sm text-[#1f1e1c] shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1b4d3e]/20 transition-all duration-200 ${className}`}
         {...props}
       />
       {error && <p className="text-xs text-red-600 mt-1">{error}</p>}

@@ -26,14 +26,27 @@ async function LoginForm({ searchParams }: PageProps) {
             priority
             className="w-20 h-20 mx-auto rounded-2xl shadow-md"
           />
-          <h1 className="text-2xl font-bold text-[#1f1e1c] tracking-tight">Koperasi Panji Borneo Mandiri</h1>
-          <p className="text-sm text-[#5e5b56]">Login Khusus Ketua Koperasi</p>
+          <h1 className="text-2xl font-bold text-[#1f1e1c] tracking-tight">
+            Koperasi Panji Borneo Mandiri
+          </h1>
+          <p className="text-sm text-[#5e5b56]">
+            Sistem Pendukung Keputusan Prioritas Penerima Pinjaman
+          </p>
         </div>
 
         <Card className="shadow-md">
-          {errorMessage && <Notification type="error" message={errorMessage} className="mb-6" />}
+          {errorMessage && (
+            <Notification
+              type="error"
+              message={errorMessage}
+              className="mb-6"
+            />
+          )}
 
           <form action={loginAction} className="space-y-4">
+            <p className="text-sm text-[#1f1e1c] text-center">
+              Login Khusus Ketua Koperasi
+            </p>
             <Input
               label="Username"
               name="username"

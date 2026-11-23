@@ -5,7 +5,9 @@ import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import Link from "next/link";
 import { AppLayout } from "./components/AppLayout";
-import { Card, Button } from "./components/UI";
+import { Card } from "@/app/components/ui/Card";
+import { Button } from "@/app/components/ui/Button";
+import { Tex } from "@/src/components/Tex";
 
 export async function loginAction(formData: FormData) {
   "use server";
@@ -63,7 +65,7 @@ async function HomeContent() {
               Dashboard Ketua Koperasi
             </span>
             <h1 className="text-3xl font-bold tracking-tight text-white">
-              Sistem Pendukung Keputusan Pinjaman
+              Sistem Pendukung Keputusan Penentuan Prioritas Penerima Pinjaman
             </h1>
             <p className="text-teal-100 text-sm leading-relaxed">
               Mengevaluasi dan menentukan kelayakan calon penerima pinjaman secara transparan, objektif, dan adil menggunakan metode WASPAS dan pembobotan ROC.
@@ -73,44 +75,44 @@ async function HomeContent() {
 
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <Card title="Total Data Pengaju" subtitle="Alternatif aktif saat ini" className="flex flex-col justify-between">
+          <Card title="Total Data Pengaju" description="Alternatif aktif saat ini" className="flex flex-col justify-between">
             <div className="my-4 flex items-baseline gap-2">
               <span className="text-4xl font-bold text-stone-900">{applicantCount}</span>
               <span className="text-sm text-stone-500">Orang pengaju</span>
             </div>
-            <Link href="/calculation">
+            <Link href="/applicants">
               <Button variant="secondary" className="w-full">Kelola Pengaju</Button>
             </Link>
           </Card>
 
-          <Card title="Riwayat Perhitungan" subtitle="Laporan dan arsip rekomendasi" className="flex flex-col justify-between">
+          <Card title="Riwayat Perhitungan" description="Laporan dan arsip rekomendasi" className="flex flex-col justify-between">
             <div className="my-4 flex items-baseline gap-2">
               <span className="text-4xl font-bold text-stone-900">{calculationCount}</span>
               <span className="text-sm text-stone-500">Arsip perhitungan</span>
             </div>
             <Link href="/calculation/history">
-              <Button variant="secondary" className="w-full">Lihat Riwayat & Laporan</Button>
+              <Button variant="secondary" className="w-full">Lihat Riwayat dan Laporan</Button>
             </Link>
           </Card>
         </div>
 
         {/* Action Modules */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card title="Manajemen Kriteria & Bobot" subtitle="Konfigurasi C1 s.d. C5 dan bobot ROC otomatis">
+          <Card title="Lihat Kriteria dan Bobot" description="Lihat Konfigurasi C1 s.d. C5 dan bobot ROC otomatis" className="flex flex-col justify-between">
             <p className="text-stone-600 text-sm mb-6">
               Periksa daftar kriteria, atribut benefit/cost, tingkat prioritas, dan bobot Rank Order Centroid (ROC) yang digunakan dalam perhitungan sistem.
             </p>
-            <Link href="/criteria">
-              <Button variant="primary">Kelola Kriteria</Button>
+            <Link href="/criteria" className="mt-auto">
+              <Button variant="primary" className="w-full">Lihat Kriteria</Button>
             </Link>
           </Card>
 
-          <Card title="Perhitungan & Rekomendasi" subtitle="Jalankan WASPAS & perankingan alternatif">
+          <Card title="Perhitungan dan Rekomendasi" description="Jalankan WASPAS dan perankingan alternatif" className="flex flex-col justify-between">
             <p className="text-stone-600 text-sm mb-6">
-              Masukkan data pengaju, jalankan perhitungan matriks normalisasi, utilitas WSM & WPM, serta dapatkan 3 besar peringkat rekomendasi untuk Ketua Koperasi.
+              Masukkan data pengaju, jalankan perhitungan matriks normalisasi, utilitas <Tex>WSM</Tex> dan <Tex>WPM</Tex>, serta dapatkan 3 besar peringkat rekomendasi untuk Ketua Koperasi.
             </p>
-            <Link href="/calculation">
-              <Button variant="primary">Mulai Perhitungan</Button>
+            <Link href="/calculation" className="mt-auto">
+              <Button variant="primary" className="w-full">Mulai Perhitungan</Button>
             </Link>
           </Card>
         </div>

@@ -7,14 +7,16 @@ export function NavLinks() {
 
   const isHome = pathname === "/";
   const isCriteria = pathname === "/criteria";
+  const isApplicants = pathname === "/applicants" || pathname.startsWith("/applicants/");
   const isHistory = pathname === "/calculation/history";
   const isCalculation = pathname === "/calculation";
 
   const navItems = [
     { label: "Beranda", href: "/", active: isHome },
     { label: "Kriteria dan Bobot", href: "/criteria", active: isCriteria },
-    { label: "Data Pengaju dan Perhitungan", href: "/calculation", active: isCalculation },
-    { label: "Riwayat/Laporan", href: "/calculation/history", active: isHistory },
+    { label: "Input Data Pengaju", href: "/applicants", active: isApplicants },
+    { label: "Perhitungan", href: "/calculation", active: isCalculation },
+    { label: "Riwayat dan Laporan", href: "/calculation/history", active: isHistory },
   ];
 
   return (

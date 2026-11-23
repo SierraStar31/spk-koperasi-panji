@@ -1,8 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import prisma from "@/lib/prisma";
 import { criteria, calculateRocWeights } from "@/src/lib/criteria";
+import { Tex } from "@/src/components/Tex";
 import PrintButton from "./PrintButton";
 
 interface PrintPageProps {
@@ -17,8 +19,8 @@ async function PrintReportContent({ params }: PrintPageProps) {
     notFound();
   }
 
-  const calculation = await prisma.calculation.findUnique({
-    where: { id: calcId },
+  const calculation = await prisma.calculation.findFirst({
+    where: { id: calcId, deletedAt: null },
     include: {
       results: {
         orderBy: { rank: "asc" },
@@ -38,7 +40,7 @@ async function PrintReportContent({ params }: PrintPageProps) {
   });
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 print:bg-white print:text-black">
+    <div className="print-report min-h-screen bg-white text-gray-900 print:bg-white print:text-black">
       {/* Top Navbar (hidden during print) */}
       <div className="bg-gray-100 border-b border-gray-200 px-6 py-3 flex justify-between items-center no-print">
         <Link href="/calculation/history" className="text-sm font-medium text-[#1b4d3e] hover:text-[#143a2e] rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1b4d3e]">
@@ -50,11 +52,13 @@ async function PrintReportContent({ params }: PrintPageProps) {
       <main className="max-w-4xl mx-auto p-8 space-y-8 print:p-0 print:max-w-none">
         {/* Report Header */}
         <div className="text-center border-b-2 border-gray-800 pb-6 space-y-2">
-          <img
+          <Image
             src="/logo%20koperasi.svg"
             alt="Logo Koperasi Panji Borneo Mandiri"
             width={72}
             height={72}
+            priority
+            unoptimized
             className="w-18 h-18 mx-auto mb-2"
           />
           <h1 className="text-2xl font-bold uppercase tracking-wide text-gray-900">
@@ -88,7 +92,7 @@ async function PrintReportContent({ params }: PrintPageProps) {
                   <th className="px-3 py-2 text-left font-semibold text-gray-800">Nama Kriteria</th>
                   <th className="px-3 py-2 text-center font-semibold text-gray-800">Atribut</th>
                   <th className="px-3 py-2 text-center font-semibold text-gray-800">Prioritas</th>
-                  <th className="px-3 py-2 text-right font-semibold text-gray-800">Bobot (w_j)</th>
+                  <th className="px-3 py-2 text-right font-semibold text-gray-800">Bobot (<Tex>{"w_j"}</Tex>)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -109,7 +113,7 @@ async function PrintReportContent({ params }: PrintPageProps) {
         {/* Applicants Original Values & Scores */}
         <div className="space-y-3">
           <h3 className="text-base font-bold text-gray-900 border-b border-gray-300 pb-1">
-            2. Daftar Pengaju, Nilai Asli, dan Skor Konversi (C1 - C5)
+            2. Daftar Pengaju, Nilai Asli, dan Skor Konversi (<Tex>{"x_{ij}"}</Tex>)
           </h3>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-300 border border-gray-300 text-xs">
@@ -118,7 +122,7 @@ async function PrintReportContent({ params }: PrintPageProps) {
                   <th className="px-2 py-2 text-center font-semibold text-gray-800" rowSpan={2}>No</th>
                   <th className="px-3 py-2 text-left font-semibold text-gray-800" rowSpan={2}>Nama Pengaju</th>
                   <th className="px-3 py-2 text-center font-semibold text-gray-800 border-b border-gray-300" colSpan={5}>
-                    Nilai Asli Pengaju
+                    Nilai Asli Pengaju (<Tex>{"x_{ij}"}</Tex>)
                   </th>
                   <th className="px-3 py-2 text-center font-semibold text-gray-800 border-b border-gray-300" colSpan={5}>
                     Skor Konversi (1-5)
@@ -162,7 +166,7 @@ async function PrintReportContent({ params }: PrintPageProps) {
         {/* Ranking & Q_i Results */}
         <div className="space-y-3">
           <h3 className="text-base font-bold text-gray-900 border-b border-gray-300 pb-1">
-            3. Hasil Penilaian WASPAS & Peringkat Akhir
+            3. Hasil Penilaian WASPAS & Peringkat Akhir (<Tex>{"Q_i"}</Tex>)
           </h3>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-300 border border-gray-300 text-xs">
@@ -171,9 +175,9 @@ async function PrintReportContent({ params }: PrintPageProps) {
                   <th className="px-3 py-2 text-center font-semibold text-gray-800">Peringkat</th>
                   <th className="px-3 py-2 text-left font-semibold text-gray-800">Nama Pengaju</th>
                   <th className="px-3 py-2 text-right font-semibold text-gray-800">Pinjaman Diajukan</th>
-                  <th className="px-3 py-2 text-right font-semibold text-gray-800">WSM</th>
-                  <th className="px-3 py-2 text-right font-semibold text-gray-800">WPM</th>
-                  <th className="px-3 py-2 text-right font-semibold text-gray-800">Q_i (Utilitas)</th>
+                  <th className="px-3 py-2 text-right font-semibold text-gray-800"><Tex>{"WSM"}</Tex></th>
+                  <th className="px-3 py-2 text-right font-semibold text-gray-800"><Tex>{"WPM"}</Tex></th>
+                  <th className="px-3 py-2 text-right font-semibold text-gray-800"><Tex>{"Q_i"}</Tex> (Utilitas)</th>
                   <th className="px-3 py-2 text-center font-semibold text-gray-800">Status</th>
                 </tr>
               </thead>
@@ -212,13 +216,9 @@ async function PrintReportContent({ params }: PrintPageProps) {
         </div>
 
         {/* Signature Area */}
-        <div className="pt-12 grid grid-cols-2 text-xs text-center">
+        <div className="pt-12 flex justify-end text-xs text-center">
           <div>
             <p className="mb-16">Mengetahui,<br />Ketua Koperasi</p>
-            <p className="font-bold underline">( _______________________ )</p>
-          </div>
-          <div>
-            <p className="mb-16">Petugas Analis / SPK</p>
             <p className="font-bold underline">( _______________________ )</p>
           </div>
         </div>

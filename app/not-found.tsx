@@ -16,14 +16,11 @@ export default function NotFound() {
         <div className="text-4xl font-bold tracking-tight text-[#1b4d3e]">404</div>
         <h1 className="text-xl font-bold">Halaman Tidak Ditemukan</h1>
         <p className="text-sm text-[#5e5b56] leading-relaxed">
-          Maaf, halaman atau laporan perhitungan yang Anda cari tidak ditemukan atau telah dihapus.
+          Maaf, halaman yang Anda cari tidak ditemukan.
         </p>
         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-3">
           <Link href="/">
             <Button variant="primary" className="w-full sm:w-auto">Kembali ke Beranda</Button>
-          </Link>
-          <Link href="/calculation/history">
-            <Button variant="secondary" className="w-full sm:w-auto">Riwayat Perhitungan</Button>
           </Link>
         </div>
       </div>

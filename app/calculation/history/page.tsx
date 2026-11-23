@@ -1,17 +1,38 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { AppLayout } from "@/app/components/AppLayout";
 import { Card } from "@/app/components/ui/Card";
 import { Button } from "@/app/components/ui/Button";
 import { EmptyState } from "@/app/components/ui/EmptyState";
+import { ConfirmForm } from "@/app/components/ConfirmForm";
+import { Tex } from "@/src/components/Tex";
+
+export async function deleteCalculationAction(formData: FormData) {
+  "use server";
+  const idStr = formData.get("calculationId")?.toString();
+  if (!idStr) return;
+  const id = parseInt(idStr, 10);
+  if (isNaN(id)) return;
+  // Soft delete: baris tetap tersimpan agar riwayat tidak hilang permanen.
+  await prisma.calculation.update({
+    where: { id },
+    data: { deletedAt: new Date() },
+  });
+  revalidatePath("/calculation/history");
+  revalidatePath("/calculation");
+  redirect("/calculation/history");
+}
 
 async function HistoryContent() {
   const cookieStore = await cookies();
   const session = cookieStore.get("session");
 
   const calculations = await prisma.calculation.findMany({
+    where: { deletedAt: null },
     orderBy: { createdAt: "desc" },
     include: {
       results: {
@@ -73,14 +94,25 @@ async function HistoryContent() {
                         <td className="px-4 py-3.5 whitespace-nowrap text-[#5e5b56]">{formattedDate}</td>
                         <td className="px-4 py-3.5 whitespace-nowrap text-center text-[#5e5b56]">{calc.results.length} Pengaju</td>
                         <td className="px-4 py-3.5 whitespace-nowrap font-semibold text-[#1f1e1c]">
-                          {topCandidate ? `${topCandidate.nama} (Q_i: ${Number(topCandidate.qi).toFixed(4)})` : "-"}
+                          {topCandidate ? <>{topCandidate.nama} (<Tex>{"Q_i"}</Tex>: {Number(topCandidate.qi).toFixed(4)})</> : "-"}
                         </td>
                         <td className="px-4 py-3.5 whitespace-nowrap text-center">
-                          <Link href={`/calculation/${calc.id}/print`}>
-                            <Button variant="primary" className="text-xs py-1.5 px-3">
-                              Cetak Laporan
-                            </Button>
-                          </Link>
+                          <div className="flex items-center justify-center gap-2">
+                            <Link href={`/calculation/${calc.id}/print`}>
+                              <Button variant="primary" className="text-xs py-1.5 px-3">
+                                Cetak Laporan
+                              </Button>
+                            </Link>
+                            <ConfirmForm
+                              action={deleteCalculationAction}
+                              message="Sembunyikan perhitungan ini dari daftar? Data tetap tersimpan di database dan tidak hilang permanen."
+                            >
+                              <input type="hidden" name="calculationId" value={calc.id} />
+                              <Button variant="danger" className="text-xs py-1.5 px-3">
+                                Hapus dari daftar
+                              </Button>
+                            </ConfirmForm>
+                          </div>
                         </td>
                       </tr>
                     );

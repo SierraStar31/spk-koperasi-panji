@@ -36,6 +36,10 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--bg-warm);
   color: var(--text-main);
@@ -43,16 +47,43 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
 @media print {
   .no-print {
     display: none !important;
   }
+  html,
   body {
     background-color: white !important;
     color: black !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    -webkit-font-smoothing: antialiased;
+  }
+  * {
+    box-shadow: none !important;
+  }
+  .katex,
+  .katex * {
+    color: black !important;
+  }
+  .katex-display {
+    overflow: visible !important;
+    margin: 0.5em 0 !important;
+  }
+  .katex-display > .katex {
+    white-space: normal !important;
+  }
+  .overflow-x-auto {
+    overflow: visible !important;
   }
   table {
     page-break-inside: auto;
+    width: 100% !important;
   }
   tr {
     page-break-inside: avoid;
@@ -63,5 +94,23 @@ body {
   }
   tfoot {
     display: table-footer-group;
+  }
+  img {
+    page-break-inside: avoid;
+  }
+  .print-report,
+  .print-report * {
+    color: black !important;
+  }
+  .print-report table {
+    font-size: 9pt;
+  }
+  .print-report th,
+  .print-report td {
+    padding: 2px 4px !important;
+  }
+  .print-report .bg-gray-100,
+  .print-report .bg-gray-50 {
+    background-color: white !important;
   }
 }

@@ -37,6 +37,7 @@ model Applicant {
 model Calculation {
   id        Int                 @id @default(autoincrement())
   createdAt DateTime            @default(now())
+  deletedAt DateTime?
   results   CalculationResult[]
 
   @@map("calculations")

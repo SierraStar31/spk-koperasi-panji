@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { ReactLenis } from "lenis/react";
+import "lenis/dist/lenis.css";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,7 +22,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="id"
       className={`${geistSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">
+        <ReactLenis root />
+        {children}
+      </body>
     </html>
   );
 }

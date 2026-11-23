@@ -13,6 +13,12 @@ export const criteria: Criterion[] = [
   { code: "C5", name: "Umur", type: "cost", priority: 5 },
 ];
 
+export const urgencyOptions = [
+  { value: 1, description: "Tidak Mendesak (kebutuhan konsumtif/bisa ditunda)" },
+  { value: 2, description: "Mendesak (kebutuhan usaha/keluarga)" },
+  { value: 3, description: "Sangat Mendesak (biaya medis/darurat)" },
+];
+
 export function calculateRocWeights(m: number): number[] {
   const weights: number[] = [];
   for (let j = 1; j <= m; j++) {
