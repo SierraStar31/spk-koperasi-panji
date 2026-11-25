@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { Suspense } from "react";
 import prisma from "@/lib/prisma";
 import { requireSession } from "@/lib/session";
-import { consumeConfirmationToken } from "@/lib/confirm";
 import { urgencyOptions } from "@/src/lib/criteria";
 import { AppLayout } from "@/app/components/AppLayout";
 import { Card } from "@/app/components/ui/Card";
@@ -52,14 +51,12 @@ export async function addApplicantAction(formData: FormData) {
   redirect("/applicants");
 }
 
-export async function clearApplicantsAction(formData: FormData) {
+export async function clearApplicantsAction() {
   "use server";
   await requireSession();
-  if (!(await consumeConfirmationToken(formData.get("confirmToken"), { action: "applicants.clear" }))) {
-    redirect("/applicants?error=" + encodeURIComponent("Konfirmasi tidak valid atau sudah kedaluwarsa. Silakan ulangi penghapusan."));
-  }
   await prisma.applicant.deleteMany({});
-  redirect("/applicants");
+  revalidatePath("/applicants");
+  redirect("/applicants?success=" + encodeURIComponent("Semua data pengaju berhasil dihapus"));
 }
 
 export async function deleteApplicantAction(formData: FormData) {
@@ -71,20 +68,12 @@ export async function deleteApplicantAction(formData: FormData) {
     redirect("/applicants?error=" + encodeURIComponent("ID pengaju tidak valid."));
   }
 
-  if (!(await consumeConfirmationToken(formData.get("confirmToken"), { action: `applicant.delete:${id}` }))) {
-    redirect("/applicants?error=" + encodeURIComponent("Konfirmasi tidak valid atau sudah kedaluwarsa. Silakan ulangi penghapusan."));
-  }
-
   const existing = await prisma.applicant.findUnique({ where: { id } });
   if (!existing) {
     redirect("/applicants?error=" + encodeURIComponent("Data pengaju tidak ditemukan atau sudah dihapus."));
   }
 
-  try {
-    await prisma.applicant.delete({ where: { id } });
-  } catch {
-    redirect("/applicants?error=" + encodeURIComponent("Data pengaju tidak ditemukan atau sudah dihapus."));
-  }
+  await prisma.applicant.delete({ where: { id } });
 
   revalidatePath("/applicants");
   redirect("/applicants?success=" + encodeURIComponent("Data pengaju berhasil dihapus"));
@@ -154,7 +143,6 @@ async function ApplicantsContent({ searchParams }: PageProps) {
             applicants.length > 0 ? (
               <ConfirmForm
                 action={clearApplicantsAction}
-                confirmAction="applicants.clear"
                 message="Apakah Anda yakin ingin menghapus semua pengaju? Riwayat dan laporan tidak ikut terhapus."
               >
                 <Button variant="danger" className="text-xs">
@@ -200,7 +188,6 @@ async function ApplicantsContent({ searchParams }: PageProps) {
                           </Link>
                           <ConfirmForm
                             action={deleteApplicantAction}
-                            confirmAction={`applicant.delete:${app.id}`}
                             message={`Hapus pengaju ${app.nama}? Riwayat dan laporan yang sudah dibuat tidak ikut terhapus.`}
                           >
                             <input type="hidden" name="id" value={app.id} />

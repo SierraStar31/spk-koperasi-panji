@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { requireSession } from "@/lib/session";
-import { consumeConfirmationToken } from "@/lib/confirm";
 import { AppLayout } from "@/app/components/AppLayout";
 import { Card } from "@/app/components/ui/Card";
 import { Button } from "@/app/components/ui/Button";
@@ -20,9 +19,6 @@ export async function deleteCalculationAction(formData: FormData) {
   if (!idStr) return;
   const id = parseInt(idStr, 10);
   if (isNaN(id)) return;
-  if (!(await consumeConfirmationToken(formData.get("confirmToken"), { action: `calculation.delete:${id}` }))) {
-    redirect("/calculation/history?error=" + encodeURIComponent("Konfirmasi tidak valid atau sudah kedaluwarsa. Silakan ulangi penghapusan."));
-  }
   // Hapus permanen: baris calculation dihapus, results ikut terhapus lewat onDelete: Cascade.
   await prisma.calculation.delete({ where: { id } });
   revalidatePath("/calculation/history");
@@ -115,7 +111,6 @@ async function HistoryContent({ searchParams }: PageProps) {
                             </Link>
                             <ConfirmForm
                               action={deleteCalculationAction}
-                              confirmAction={`calculation.delete:${calc.id}`}
                               message="Hapus perhitungan ini dari riwayat? Data perhitungan akan dihapus permanen."
                             >
                               <input type="hidden" name="calculationId" value={calc.id} />
