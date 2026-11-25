@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import prisma from "@/lib/prisma";
+import { requireSession } from "@/lib/session";
 import { urgencyOptions } from "@/src/lib/criteria";
 import { AppLayout } from "@/app/components/AppLayout";
 import { Card } from "@/app/components/ui/Card";
@@ -20,8 +20,7 @@ interface PageProps {
 }
 
 async function EditApplicantContent({ params, searchParams }: PageProps) {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("session");
+  const sessionUsername = await requireSession();
   const { id: idStr } = await params;
   const id = parseInt(idStr, 10);
   const search = await searchParams;
@@ -41,6 +40,7 @@ async function EditApplicantContent({ params, searchParams }: PageProps) {
 
   async function updateApplicantAction(formData: FormData) {
     "use server";
+    await requireSession();
     const nama = formData.get("nama")?.toString().trim();
     const simpanan = parseInt(parseThousands(formData.get("simpanan")?.toString()) || "", 10);
     const pinjamanDiajukan = parseInt(parseThousands(formData.get("pinjamanDiajukan")?.toString()) || "", 10);
@@ -92,7 +92,7 @@ async function EditApplicantContent({ params, searchParams }: PageProps) {
   }
 
   return (
-    <AppLayout sessionUsername={session?.value}>
+    <AppLayout sessionUsername={sessionUsername}>
       <div className="max-w-3xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <div>
@@ -129,6 +129,7 @@ async function EditApplicantContent({ params, searchParams }: PageProps) {
                 label="Pinjaman Diajukan (Rp) [C2] (Max 3.000.000)"
                 name="pinjamanDiajukan"
                 required
+                max={3000000}
                 defaultValue={applicant.pinjamanDiajukan}
                 placeholder="2.000.000"
               />

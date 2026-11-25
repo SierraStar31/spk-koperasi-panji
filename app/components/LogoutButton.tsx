@@ -1,11 +1,10 @@
 import { IconLogout } from "./ui/Icons";
+import { clearSessionCookie } from "@/lib/session";
 
 export function LogoutButton() {
   async function logoutAction() {
     "use server";
-    const { cookies } = await import("next/headers");
-    const cookieStore = await cookies();
-    cookieStore.delete("session");
+    await clearSessionCookie();
     const { redirect } = await import("next/navigation");
     redirect("/login");
   }

@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { Suspense } from "react";
 import prisma from "@/lib/prisma";
+import { requireSession } from "@/lib/session";
+import { consumeConfirmationToken } from "@/lib/confirm";
 import { urgencyOptions } from "@/src/lib/criteria";
 import { AppLayout } from "@/app/components/AppLayout";
 import { Card } from "@/app/components/ui/Card";
@@ -18,6 +19,7 @@ import { ConfirmForm } from "@/app/components/ConfirmForm";
 
 export async function addApplicantAction(formData: FormData) {
   "use server";
+  await requireSession();
   const nama = formData.get("nama")?.toString().trim();
   const simpanan = parseInt(parseThousands(formData.get("simpanan")?.toString()) || "0", 10);
   const pinjamanDiajukan = parseInt(parseThousands(formData.get("pinjamanDiajukan")?.toString()) || "0", 10);
@@ -50,18 +52,27 @@ export async function addApplicantAction(formData: FormData) {
   redirect("/applicants");
 }
 
-export async function clearApplicantsAction() {
+export async function clearApplicantsAction(formData: FormData) {
   "use server";
+  await requireSession();
+  if (!(await consumeConfirmationToken(formData.get("confirmToken"), { action: "applicants.clear" }))) {
+    redirect("/applicants?error=" + encodeURIComponent("Konfirmasi tidak valid atau sudah kedaluwarsa. Silakan ulangi penghapusan."));
+  }
   await prisma.applicant.deleteMany({});
   redirect("/applicants");
 }
 
 export async function deleteApplicantAction(formData: FormData) {
   "use server";
+  await requireSession();
   const id = parseInt(formData.get("id")?.toString() || "", 10);
 
   if (isNaN(id)) {
     redirect("/applicants?error=" + encodeURIComponent("ID pengaju tidak valid."));
+  }
+
+  if (!(await consumeConfirmationToken(formData.get("confirmToken"), { action: `applicant.delete:${id}` }))) {
+    redirect("/applicants?error=" + encodeURIComponent("Konfirmasi tidak valid atau sudah kedaluwarsa. Silakan ulangi penghapusan."));
   }
 
   const existing = await prisma.applicant.findUnique({ where: { id } });
@@ -84,8 +95,7 @@ interface PageProps {
 }
 
 async function ApplicantsContent({ searchParams }: PageProps) {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("session");
+  const sessionUsername = await requireSession();
   const params = await searchParams;
   const errorMessage = params.error;
   const successMessage = params.success;
@@ -93,7 +103,7 @@ async function ApplicantsContent({ searchParams }: PageProps) {
   const applicants = await prisma.applicant.findMany({ orderBy: { id: "asc" } });
 
   return (
-    <AppLayout sessionUsername={session?.value}>
+    <AppLayout sessionUsername={sessionUsername}>
       <div className="space-y-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
@@ -119,7 +129,7 @@ async function ApplicantsContent({ searchParams }: PageProps) {
           <form action={addApplicantAction} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
             <Input label="Nama Lengkap" name="nama" required placeholder="Contoh: Budi Santoso" />
             <CurrencyInput label="Jumlah Simpanan (Rp)" name="simpanan" required placeholder="3.500.000" />
-            <CurrencyInput label="Pinjaman Diajukan (Rp)" name="pinjamanDiajukan" required placeholder="2.000.000" />
+            <CurrencyInput label="Pinjaman Diajukan (Rp)" name="pinjamanDiajukan" required max={3000000} placeholder="2.000.000" />
             <Select
               label="Tingkat Urgensi (1-3)"
               name="urgensi"
@@ -144,6 +154,7 @@ async function ApplicantsContent({ searchParams }: PageProps) {
             applicants.length > 0 ? (
               <ConfirmForm
                 action={clearApplicantsAction}
+                confirmAction="applicants.clear"
                 message="Apakah Anda yakin ingin menghapus semua pengaju? Riwayat dan laporan tidak ikut terhapus."
               >
                 <Button variant="danger" className="text-xs">
@@ -189,6 +200,7 @@ async function ApplicantsContent({ searchParams }: PageProps) {
                           </Link>
                           <ConfirmForm
                             action={deleteApplicantAction}
+                            confirmAction={`applicant.delete:${app.id}`}
                             message={`Hapus pengaju ${app.nama}? Riwayat dan laporan yang sudah dibuat tidak ikut terhapus.`}
                           >
                             <input type="hidden" name="id" value={app.id} />

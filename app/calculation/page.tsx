@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { Suspense } from "react";
 import prisma from "@/lib/prisma";
+import { requireSession } from "@/lib/session";
 import { criteria, calculateRocWeights, convertToScore } from "@/src/lib/criteria";
 import { calculateWaspas } from "@/src/lib/waspas";
 
@@ -48,6 +48,7 @@ function buildWaspasInput(applicants: ApplicantRow[]) {
 
 export async function calculateAction() {
   "use server";
+  await requireSession();
   const applicants = await prisma.applicant.findMany({ orderBy: { id: "asc" } });
   if (applicants.length === 0) {
     redirect("/calculation?error=" + encodeURIComponent("Isi data pengaju terlebih dahulu"));
@@ -96,8 +97,7 @@ interface PageProps {
 }
 
 async function CalculationContent({ searchParams }: PageProps) {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("session");
+  const sessionUsername = await requireSession();
   const params = await searchParams;
   const errorMessage = params.error;
   const successMessage = params.success;
@@ -106,7 +106,6 @@ async function CalculationContent({ searchParams }: PageProps) {
   const hasApplicants = applicants.length > 0;
 
   const latestCalculation = await prisma.calculation.findFirst({
-    where: { deletedAt: null },
     orderBy: { id: "desc" },
     include: {
       results: {
@@ -126,7 +125,7 @@ async function CalculationContent({ searchParams }: PageProps) {
   const totalPinjamanTop3 = topN.reduce((sum, r) => sum + r.pinjamanDiajukan, 0);
 
   return (
-    <AppLayout sessionUsername={session?.value}>
+    <AppLayout sessionUsername={sessionUsername}>
       <div className="space-y-8">
         {errorMessage && <Notification type="error" message={errorMessage} />}
         {successMessage && <Notification type="success" message={successMessage} />}

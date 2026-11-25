@@ -1,7 +1,7 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import prisma from "@/lib/prisma";
+import { requireSession, setSessionCookie } from "@/lib/session";
 import bcrypt from "bcryptjs";
 import Link from "next/link";
 import { AppLayout } from "./components/AppLayout";
@@ -31,33 +31,19 @@ export async function loginAction(formData: FormData) {
     redirect("/login?error=" + encodeURIComponent("Username atau password salah."));
   }
 
-  const cookieStore = await cookies();
-  cookieStore.set({
-    name: "session",
-    value: user.username,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7, // 1 week
-    sameSite: "lax",
-  });
+  await setSessionCookie(user.username);
 
   redirect("/");
 }
 
 async function HomeContent() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("session");
-
-  if (!session) {
-    redirect("/login");
-  }
+  const sessionUsername = await requireSession();
 
   const applicantCount = await prisma.applicant.count();
   const calculationCount = await prisma.calculation.count();
 
   return (
-    <AppLayout sessionUsername={session.value}>
+    <AppLayout sessionUsername={sessionUsername}>
       <div className="space-y-8">
         <div className="bg-linear-to-r from-[#1b4d3e] to-[#143a2e] rounded-2xl text-white p-8 shadow-sm">
           <div className="max-w-2xl space-y-3">

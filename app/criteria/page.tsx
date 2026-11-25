@@ -1,5 +1,5 @@
-import { cookies } from "next/headers";
 import { criteria, calculateRocWeights, urgencyOptions } from "@/src/lib/criteria";
+import { requireSession } from "@/lib/session";
 import { AppLayout } from "@/app/components/AppLayout";
 import { Card } from "@/app/components/ui/Card";
 import { Badge } from "@/app/components/ui/Badge";
@@ -15,13 +15,12 @@ const ratingScales: Record<string, string> = {
 };
 
 async function CriteriaContent() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("session");
+  const sessionUsername = await requireSession();
   const weights = calculateRocWeights(criteria.length);
   const totalWeight = weights.reduce((sum, w) => sum + w, 0);
 
   return (
-    <AppLayout sessionUsername={session?.value}>
+    <AppLayout sessionUsername={sessionUsername}>
       <div className="space-y-8">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white rounded-2xl p-6 border border-[#e6e2dc] shadow-2xs">

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import prisma from "@/lib/prisma";
+import { requireSession } from "@/lib/session";
 import { criteria, calculateRocWeights } from "@/src/lib/criteria";
 import { Tex } from "@/src/components/Tex";
 import PrintButton from "./PrintButton";
@@ -12,6 +13,7 @@ interface PrintPageProps {
 }
 
 async function PrintReportContent({ params }: PrintPageProps) {
+  await requireSession();
   const { id } = await params;
   const calcId = parseInt(id, 10);
 
@@ -20,7 +22,7 @@ async function PrintReportContent({ params }: PrintPageProps) {
   }
 
   const calculation = await prisma.calculation.findFirst({
-    where: { id: calcId, deletedAt: null },
+    where: { id: calcId },
     include: {
       results: {
         orderBy: { rank: "asc" },

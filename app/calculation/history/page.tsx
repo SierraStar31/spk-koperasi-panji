@@ -1,38 +1,46 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
+import { requireSession } from "@/lib/session";
+import { consumeConfirmationToken } from "@/lib/confirm";
 import { AppLayout } from "@/app/components/AppLayout";
 import { Card } from "@/app/components/ui/Card";
 import { Button } from "@/app/components/ui/Button";
 import { EmptyState } from "@/app/components/ui/EmptyState";
+import { Notification } from "@/app/components/ui/Notification";
 import { ConfirmForm } from "@/app/components/ConfirmForm";
 import { Tex } from "@/src/components/Tex";
 
 export async function deleteCalculationAction(formData: FormData) {
   "use server";
+  await requireSession();
   const idStr = formData.get("calculationId")?.toString();
   if (!idStr) return;
   const id = parseInt(idStr, 10);
   if (isNaN(id)) return;
-  // Soft delete: baris tetap tersimpan agar riwayat tidak hilang permanen.
-  await prisma.calculation.update({
-    where: { id },
-    data: { deletedAt: new Date() },
-  });
+  if (!(await consumeConfirmationToken(formData.get("confirmToken"), { action: `calculation.delete:${id}` }))) {
+    redirect("/calculation/history?error=" + encodeURIComponent("Konfirmasi tidak valid atau sudah kedaluwarsa. Silakan ulangi penghapusan."));
+  }
+  // Hapus permanen: baris calculation dihapus, results ikut terhapus lewat onDelete: Cascade.
+  await prisma.calculation.delete({ where: { id } });
   revalidatePath("/calculation/history");
   revalidatePath("/calculation");
-  redirect("/calculation/history");
+  redirect("/calculation/history?success=" + encodeURIComponent("Perhitungan berhasil dihapus."));
 }
 
-async function HistoryContent() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("session");
+interface PageProps {
+  searchParams: Promise<{ error?: string; success?: string }>;
+}
+
+async function HistoryContent({ searchParams }: PageProps) {
+  const sessionUsername = await requireSession();
+  const params = await searchParams;
+  const errorMessage = params.error;
+  const successMessage = params.success;
 
   const calculations = await prisma.calculation.findMany({
-    where: { deletedAt: null },
     orderBy: { createdAt: "desc" },
     include: {
       results: {
@@ -42,8 +50,10 @@ async function HistoryContent() {
   });
 
   return (
-    <AppLayout sessionUsername={session?.value}>
+    <AppLayout sessionUsername={sessionUsername}>
       <div className="space-y-6">
+        {errorMessage && <Notification type="error" message={errorMessage} />}
+        {successMessage && <Notification type="success" message={successMessage} />}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h2 className="text-2xl font-bold text-[#1f1e1c]">Riwayat & Laporan Perhitungan</h2>
@@ -105,7 +115,8 @@ async function HistoryContent() {
                             </Link>
                             <ConfirmForm
                               action={deleteCalculationAction}
-                              message="Sembunyikan perhitungan ini dari daftar? Data tetap tersimpan di database dan tidak hilang permanen."
+                              confirmAction={`calculation.delete:${calc.id}`}
+                              message="Hapus perhitungan ini dari riwayat? Data perhitungan akan dihapus permanen."
                             >
                               <input type="hidden" name="calculationId" value={calc.id} />
                               <Button variant="danger" className="text-xs py-1.5 px-3">
@@ -127,10 +138,10 @@ async function HistoryContent() {
   );
 }
 
-export default function CalculationHistoryPage() {
+export default function CalculationHistoryPage({ searchParams }: PageProps) {
   return (
     <Suspense fallback={<div className="flex h-screen items-center justify-center text-[#1b4d3e]">Memuat riwayat...</div>}>
-      <HistoryContent />
+      <HistoryContent searchParams={searchParams} />
     </Suspense>
   );
 }
